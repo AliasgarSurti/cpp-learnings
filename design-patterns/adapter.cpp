@@ -47,18 +47,24 @@ branch to inherit the implementation.
 ***/
 class TextShape : public shape , private TextView{
 private:
+	TextView *txtView;
 public:
-	TextShape(){ cout << "Making object for TextShape" << endl; }
-	virtual void getPoint() final{
-		cout << "getting point for TextView" << endl;
+	TextShape(TextView *ptr){ 
+		cout << "Making object for TextShape" << endl;
+		txtView = ptr;
 	}
+	virtual void getPoint() final{
+		//cout << "getting point for TextView" << endl;
+		txtView->getPoint();
+	}
+	void plugin(TextView *ptr){ txtView = ptr; }
 };
 
 int main()
 {
-	shape *ptr;
-	ptr = new(TextShape);
-	ptr->makeShape();
-	ptr->getPoint();
+	text *concreteAdaptee = new (text);
+	TextShape *Adaptor = new (TextShape(concreteAdaptee));
+	circle *client = new (client);
+	
 	return 0;
 }
